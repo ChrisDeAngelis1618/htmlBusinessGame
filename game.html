@@ -1,0 +1,75 @@
+<style>
+* {
+  float:left;
+  padding:5px;
+}
+</style>
+
+<body onload="update()">
+    
+    <row>
+        <p id="cash" style="background-color:lightgray"></p>
+        <p id="time" style="background-color:lightskyblue"></p>
+        <p id="assets" style="background-color:lightgreen"></p>
+        <p id="loan" style="background-color:yellow"></p>
+    </row>
+
+    <row>
+        <button onclick="day1()">Increment 1 Day</button>
+        <button onclick="buyAsset1()">Purchase 1 Asset</button>
+        <button onclick="borrow100()">Borrow $100</button>
+    </row>
+
+	<row>
+		<p id="message"><p>
+	</row>
+
+</body>
+
+<script>
+	
+	var day = 0;
+	var cash = 20;
+	var assets = 0;
+	var debt = 0;
+	
+	function update(){
+		document.getElementById("time").innerHTML = "Day "+day;
+		document.getElementById("cash").innerHTML = "$"+cash;
+		document.getElementById("assets").innerHTML = assets+" assets";
+		document.getElementById("loan").innerHTML = "$"+debt;
+		document.getElementById("message").innerHTML = "";
+	}
+	
+    function day1(){
+        day=day+1;
+		cash=cash+assets*.5;
+		update();
+    }
+	
+	function buyAsset1(){
+		if (cash<10) {
+			return
+		}
+		else {
+			cash = cash-10;
+			assets = assets+1;
+			update();
+		}
+	}
+	
+	function borrow100(){
+		if (cash+assets*10-debt*3<0) {
+			document.getElementById("message").innerHTML = "sorry Bucko";
+			document.getElementById("message").style.backgroundColor="pink";
+			return;
+		}
+		else {
+			cash = cash+100;
+			debt = debt+100;
+			update();
+		}
+	}
+		
+</script> 
+
