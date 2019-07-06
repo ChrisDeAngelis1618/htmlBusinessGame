@@ -2,74 +2,157 @@
 * {
   float:left;
   padding:5px;
+  margin:0px;
+  font-style:"bold";
 }
+
+
 </style>
 
 <body onload="update()">
     
-    <row>
-        <p id="cash" style="background-color:lightgray"></p>
+    <section>
         <p id="time" style="background-color:lightskyblue"></p>
+        <p id="net" style="background-color:orange"></p>
+    </section>
+<br>
+    <section>
+        <p id="loan" style="background-color:pink"></p>
+        <p id="interest" style="background-color:gray"></p>
+    </section>
+<br>
+
+    <section>
         <p id="assets" style="background-color:lightgreen"></p>
-        <p id="loan" style="background-color:yellow"></p>
-    </row>
+        <p id="income" style="background-color:yellow"></p>
+    </section>
+<br>
 
-    <row>
-        <button onclick="day1()">Increment 1 Day</button>
-        <button onclick="buyAsset1()">Purchase 1 Asset</button>
-        <button onclick="borrow100()">Borrow $100</button>
-    </row>
+    <section>
 
-	<row>
+        <p id="cash" style="background-color:lightgray"></p>
+    </section>
+
+    <section>
+        <button style="height:50px;font-style:'bold'" onclick="nextYear()">Increment 1 year</button>
+        <button style="height:50px;font-style:'bold'" onclick="buyAsset1()">Purchase $1,000 Asset</button>
+        <button style="height:50px;font-style:'bold'" onclick="borrow10k()">Borrow $10,000</button>
+    </section>
+	
+	<section>
+        <button style="height:50px;font-style:'bold'" onclick="payLoan()">$1,000 loan payment</button>
+        <button style="height:50px;font-style:'bold'" onclick="payLoan10k()">$10,000 loan payment</button>
+    </section>
+	
+	<section>
 		<p id="message"><p>
-	</row>
+	</section>
+
+	<section>
+		<p id="history"><p>
+	</section>
 
 </body>
 
+
 <script>
-	
-	var day = 0;
-	var cash = 20;
+
+	var year = 0;
+	var cash = 5000;
 	var assets = 0;
 	var debt = 0;
+	var net = cash-debt;
+	var income = 0;
+	var interest =0;
+	var loanrate = 0.1;
+	
+	var history ="Year 0: $5000 ... ";
 	
 	function update(){
-		document.getElementById("time").innerHTML = "Day "+day;
-		document.getElementById("cash").innerHTML = "$"+cash;
+	
+		net = cash-debt;
+		income = assets*333;
+		interest = debt*loanrate;
+
+		document.getElementById("time").innerHTML = "Year "+year;
+		document.getElementById("cash").innerHTML = "Cash: $"+cash;
 		document.getElementById("assets").innerHTML = assets+" assets";
-		document.getElementById("loan").innerHTML = "$"+debt;
+		document.getElementById("loan").innerHTML = "Debt: $"+debt.toFixed(2);
+		document.getElementById("net").innerHTML = "Net $"+net.toFixed(2);
+		document.getElementById("income").innerHTML = "Income $"+income;
+		document.getElementById("interest").innerHTML = "Interest $"+interest.toFixed(2);
 		document.getElementById("message").innerHTML = "";
+		document.getElementById("history").innerHTML = history;
+		
 	}
 	
-    function day1(){
-        day=day+1;
-		cash=cash+assets*.5;
+    function nextYear(){
+        year=year+1;
+		cash=cash+assets*333;
+		debt=debt*(1+loanrate);
+		net=cash-debt;
+
+		history=history+"Year "+year+": $"+net.toFixed(2)+" ... ";
+
 		update();
     }
 	
 	function buyAsset1(){
-		if (cash<10) {
-			return
-		}
-		else {
-			cash = cash-10;
+		if (cash>=1000) {
+			cash = cash-1000;
 			assets = assets+1;
 			update();
 		}
-	}
-	
-	function borrow100(){
-		if (cash+assets*10-debt*3<0) {
-			document.getElementById("message").innerHTML = "sorry Bucko";
+		else {
+			document.getElementById("message").innerHTML = "sorry";
 			document.getElementById("message").style.backgroundColor="pink";
 			return;
 		}
+
+	}
+	
+	function borrow10k(){
+	
+		if (cash+assets*10-debt*3<0) {
+			document.getElementById("message").innerHTML = "sorry";
+			document.getElementById("message").style.backgroundColor="pink";
+			return;
+		}
+	
 		else {
-			cash = cash+100;
-			debt = debt+100;
+			cash = cash+10000;
+			debt = debt+10000;
 			update();
 		}
 	}
+
+
+	function payLoan(){
+		if (cash>=1000 && debt>=1000) {
+			cash = cash-1000;
+			debt = debt-1000;
+			update();
+		}
+		else {
+			document.getElementById("message").innerHTML = "sorry";
+			document.getElementById("message").style.backgroundColor="pink";
+			return;
+		}
+	}
+
+	function payLoan10k(){
+		if (cash>=10000 && debt>=10000) {
+			cash = cash-10000;
+			debt = debt-10000;
+			update();
+		}
+		else {
+			document.getElementById("message").innerHTML = "sorry";
+			document.getElementById("message").style.backgroundColor="pink";
+			return;
+		}
+	}
 		
+
 </script> 
 
