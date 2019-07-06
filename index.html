@@ -66,7 +66,7 @@
 	var interest =0;
 	var loanrate = 0.1;
 	
-	var history ="Year 0: $5000 ... ";
+	var netHistory ="Year 0: $5000 ... ";
 	
 	function update(){
 	
@@ -82,7 +82,7 @@
 		document.getElementById("income").innerHTML = "Income $"+income;
 		document.getElementById("interest").innerHTML = "Interest $"+interest.toFixed(2);
 		document.getElementById("message").innerHTML = "";
-		document.getElementById("history").innerHTML = history;
+		document.getElementById("history").innerHTML = netHistory;
 		
 	}
 	
@@ -92,7 +92,7 @@
 		debt=debt*(1+loanrate);
 		net=cash-debt;
 
-		history=history+"Year "+year+": $"+net.toFixed(2)+" ... ";
+		netHistory=netHistory+"Year "+year+": $"+net.toFixed(2)+" ... ";
 
 		update();
     }
